@@ -3,72 +3,81 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InvestInfo"
+        xmlns:local="clr-namespace:InvestInfo.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStyle="None"
         Background="Transparent">
-    <Grid Background="White">
-        <Border Height="30"
+
+    <Grid Background="#F5E9D8">
+        <!-- Заголовок окна -->
+        <Border Height="45"
                 BorderThickness="0.4"
                 BorderBrush="Black"
-                Background="White"
+                Background="#E8D4B9"
                 VerticalAlignment="Top"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown">
-            
+
             <Grid>
-                <!-- Название -->
                 <TextBlock Text="InvestState"
-                           Foreground="Black"
+                           Foreground="#5C3D1E"
                            VerticalAlignment="Center"
                            Margin="10,0"
                            FontSize="16"/>
-                
-                <!-- Кнопки управления окном -->
+
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
-
-                    <Button x:Name="MinimizeBtn"
-                            Content="_"
-                            Width="40" Height="30"
-                            Background="Transparent"
-                            Foreground="Black"
-                            BorderThickness="0"
+                    <Button x:Name="MinimizeBtn" Content="_" Width="40" Height="30"
+                            Background="Transparent" Foreground="Black" BorderThickness="0"
                             Click="MinimizeBtn_Click"/>
-
-                    <Button x:Name="MaximizeBtn"
-                            Content="□"
-                            Width="40" Height="30"
-                            Background="Transparent"
-                            Foreground="Black"
-                            BorderThickness="0"
+                    <Button x:Name="MaximizeBtn" Content="□" Width="40" Height="30"
+                            Background="Transparent" Foreground="Black" BorderThickness="0"
                             Click="MaximizeBtn_Click"/>
-
-                    <Button x:Name="CloseBtn"
-                            Content="X"
-                            Width="40" Height="30"
-                            Background="Transparent"
-                            Foreground="Black"
-                            BorderThickness="0"
+                    <Button x:Name="CloseBtn" Content="X" Width="40" Height="30"
+                            Background="Transparent" Foreground="Black" BorderThickness="0"
                             Click="CloseBtn_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
 
-        <ContentControl Margin="0,30,0,0">
-            <TabControl BorderThickness="0">
-                <TabItem Header="Главная">
-                    <TextBlock Text="Контент главной страницы" 
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"/>
-                </TabItem>
-                
-                <TabItem Header="Операции">
-                    <TextBlock Text="Операции портфеля" 
-               HorizontalAlignment="Center" 
-               VerticalAlignment="Center"/>
-                </TabItem>
-            </TabControl>
-        </ContentControl>
+        <!-- TabControl с отступом сверху для заголовка -->
+        <TabControl Margin="0,45,0,0"
+                    TabStripPlacement="Left"
+                    Background="#22105c"
+                    BorderThickness="0"
+                    Padding="0">
+
+            <!-- Вкладка Главная -->
+            <TabItem Header="🏠 Главная">
+                <local:HomeView/>
+            </TabItem>
+
+            <!-- Вкладка Операции -->
+            <TabItem Header="📊 Операции">
+                <local:OperationsView/>
+            </TabItem>
+
+            <!-- Вкладка Портфель -->
+            <TabItem Header="📈 Портфель">
+                <Border Background="#FAF3E8">
+                    <TextBlock Text="Контент портфеля" FontSize="16" Foreground="White"/>
+                </Border>
+            </TabItem>
+
+            <!-- Вкладка Аналитика -->
+            <TabItem Header="📋 Аналитика">
+                <Border Background="#FAF3E8">
+                    <TextBlock Text="Контент аналитики" FontSize="16" Foreground="White"/>
+                </Border>
+            </TabItem>
+
+            <!-- Вкладка Настройки -->
+            <TabItem Header="⚙️ Настройки">
+                <Border Background="#FAF3E8">
+                    <TextBlock Text="Контент настроек" FontSize="16" Foreground="White"/>
+                </Border>
+            </TabItem>
+
+        </TabControl>
     </Grid>
 </Window>
