@@ -5,16 +5,26 @@ using System.Text;
 
 namespace InvestInfo.Models
 {
-    internal class Asset
+    public class Asset
     {
         public int Id { get; set; }
-        [Required] public string Ticker { get; set; }
-        [Required] public string Name { get; set; }
-        [Required] public string Type { get; set; } // "Stock", "Bond", "ETF"
-        [Required] public string Currency { get; set; } = "RUB";
+
+        [Required]
+        [MaxLength(10)]
+        public string Ticker { get; set; } = string.Empty;
+
+        [MaxLength(200)]
+        public string? Name { get; set; }
+
+        [MaxLength(50)]
+        public string? Type { get; set; }
+
+        [MaxLength(3)]
+        public string Currency { get; set; } = "RUB";
+
+        [MaxLength(100)]
         public string? Sector { get; set; }
 
-        // Связь: один актив - много операций
-        public List<Operation> Operations { get; set; } = new List<Operation>();
+        public List<Operation>? Operations { get; set; }
     }
 }

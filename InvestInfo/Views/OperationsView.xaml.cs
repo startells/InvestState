@@ -1,4 +1,7 @@
-﻿using System;
+﻿using InvestInfo.Services;
+using InvestInfo.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +24,7 @@ namespace InvestInfo.Views
         public OperationsView()
         {
             InitializeComponent();
+            DataContext = App.Current.Services.GetService<OperationsViewModel>();
         }
     }
 }
