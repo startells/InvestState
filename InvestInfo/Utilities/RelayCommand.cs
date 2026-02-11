@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace InvestInfo.Commands
+
+namespace InvestInfo.Utilities
 {
     public class RelayCommand : ICommand
     {
@@ -12,8 +13,8 @@ namespace InvestInfo.Commands
 
         public event EventHandler? CanExecuteChanged
         {
-            add => CommandManager.RequerySuggested += value;
-            remove => CommandManager.RequerySuggested -= value;
+            add { CommandManager.RequerySuggested += value;  }
+            remove {  CommandManager.RequerySuggested -= value;}
         }
 
         public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
@@ -22,8 +23,8 @@ namespace InvestInfo.Commands
             _canExecute = canExecute;
         }
 
+        // ???????
         public bool CanExecute(object? parameter) => _canExecute?.Invoke(parameter) ?? true;
-
         public void Execute(object? parameter) => _execute(parameter);
     }
 }

@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InvestInfo.Views
+namespace InvestInfo.View
 {
     /// <summary>
-    /// Логика взаимодействия для HomeView.xaml
+    /// Логика взаимодействия для Home.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class Home : UserControl
     {
-        public HomeView()
+        public Home()
         {
             InitializeComponent();
         }

@@ -1,7 +1,4 @@
-﻿using InvestInfo.Services;
-using InvestInfo.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -14,17 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InvestInfo.Views
+namespace InvestInfo.View
 {
     /// <summary>
-    /// Логика взаимодействия для OperationsView.xaml
+    /// Логика взаимодействия для Operations.xaml
     /// </summary>
-    public partial class OperationsView : UserControl
+    public partial class Operations : UserControl
     {
-        public OperationsView()
+        public Operations()
         {
             InitializeComponent();
-            DataContext = App.Current.Services.GetService<OperationsViewModel>();
         }
     }
 }

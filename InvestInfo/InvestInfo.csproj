@@ -9,11 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\shutdown_def.png" />
+    <None Remove="Images\shutdown_mo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\shutdown_def.png" />
+    <Resource Include="Images\shutdown_mo.png" />
   </ItemGroup>
 
 </Project>
