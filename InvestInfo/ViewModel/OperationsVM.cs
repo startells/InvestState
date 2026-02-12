@@ -1,31 +1,77 @@
-﻿using InvestInfo.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using InvestInfo.Data;
+using InvestInfo.Model;
+using InvestInfo.Utilities;
+using System.Collections.ObjectModel;
 
 namespace InvestInfo.ViewModel
 {
-    class OperationsVM : Utilities.ViewModelBase
+    class OperationsVM : ViewModelBase
     {
-        private readonly OperationModel _operationModel;
+        private readonly IOperationRepository _operationRepository;
+        public ObservableCollection<OperationModel> Operations { get; } = new();
+        
+        public AsyncRelayCommand AddOperationCommand { get; }
+        public AsyncRelayCommand DeleteOperationCommand { get; }
 
-        public int OperationId
+        private string _title = string.Empty;
+        public string Title
         {
-            get { return _operationModel.OperationId; }
-            set { _operationModel.OperationId = value; OnPropertyChanged(); }
+            get => _title;
+            set { _title = value; OnPropertyChanged(); }
         }
 
-        public string OperationName
+        private decimal _amount;
+        public decimal Amount
         {
-            get { return _operationModel.OperationName; }
-            set { _operationModel.OperationName = value; OnPropertyChanged(); }
+            get => _amount;
+            set { _amount = value; OnPropertyChanged(); }
         }
 
-        public OperationsVM()
+        public OperationsVM(IOperationRepository repository)
         {
-            _operationModel = new OperationModel();
-            OperationId = 1; // Example initial value
-            OperationName = "Buy"; // Example initial value
+            _operationRepository = repository;
+
+            AddOperationCommand = new AsyncRelayCommand(AddAsync);
+            DeleteOperationCommand = new AsyncRelayCommand(DeleteAsync);
+
+            _ = LoadAsync();
+        }
+
+        private async Task LoadAsync()
+        {
+            var items = await _operationRepository.GetAllAsync();
+            Operations.Clear();
+            foreach (var item in items)
+                Operations.Add(item);
+        }
+
+        private async Task AddAsync(object? obj)
+        {
+            var operation = new OperationModel
+            {
+                Title = Title,
+                Amount = Amount,
+                Date = DateTime.Now
+            };
+
+            await _operationRepository.AddAsync(operation);
+            await _operationRepository.SaveChangesAsync();
+
+            Operations.Insert(0, operation);
+
+            Title = string.Empty;
+            Amount = 0;
+        }
+
+        private async Task DeleteAsync(object? obj)
+        {
+            if (obj is OperationModel operation)
+            {
+                await _operationRepository.DeleteAsync(operation.Id);
+                await _operationRepository.SaveChangesAsync();
+
+                Operations.Remove(operation);
+            }
         }
     }
 }

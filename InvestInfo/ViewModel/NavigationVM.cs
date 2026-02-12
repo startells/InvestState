@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
 namespace InvestInfo.ViewModel
 {
-    class NavigationVM : Utilities.ViewModelBase
+    public class NavigationVM : Utilities.ViewModelBase
     {
+        private readonly IServiceProvider _serviceProvider;
         private object? _currentView;
         public object? CurrentView
         {
@@ -18,11 +20,13 @@ namespace InvestInfo.ViewModel
         public ICommand OperationsCommand { get; set; }
         public ICommand CloseApp { get; set; }
 
-        private void Home(object? obj) => CurrentView = new HomeVM();
-        private void Operations(object? obj) => CurrentView = new OperationsVM();
+        private void Home(object? obj) => CurrentView = _serviceProvider.GetRequiredService<HomeVM>();
+        private void Operations(object? obj) => CurrentView = _serviceProvider.GetRequiredService<OperationsVM>();
 
-        public NavigationVM()
+        public NavigationVM(IServiceProvider serviceProvider)
         {
+            _serviceProvider = serviceProvider;
+
             HomeCommand = new Utilities.RelayCommand(Home);
             OperationsCommand = new Utilities.RelayCommand(Operations);
             CloseApp = new Utilities.RelayCommand(obj => System.Windows.Application.Current.Shutdown());

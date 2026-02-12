@@ -14,10 +14,6 @@
         WindowStyle="None"
         Background="Transparent">
 
-    <Window.DataContext>
-        <vm:NavigationVM/>
-    </Window.DataContext>
-    
     <Grid>
 
         <!--// TODO: window border //-->
@@ -67,7 +63,7 @@
 
                     <Menu:Btn Style="{StaticResource BtnStyle}"
                               Command="{Binding OperationsCommand}"
-                              IsChecked="True">
+                              IsChecked="False">
 
                         <Grid>
 

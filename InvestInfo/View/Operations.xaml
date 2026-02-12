@@ -9,50 +9,96 @@
              d:DesignWidth="630"
              Style="{StaticResource Page_Style}">
 
-    <UserControl.DataContext>
-        <vm:OperationsVM/>
-    </UserControl.DataContext>
-    
-    <Grid>
+    <Grid Margin="20">
 
-        <Border CornerRadius="0,20,20,0">
-            <Border.Background>
-                <SolidColorBrush Color="#2B2B2B"/>
-            </Border.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 🔹 Блок добавления операции -->
+        <Border Grid.Row="0"
+            Background="#333333"
+            Padding="10"
+            CornerRadius="8"
+            Margin="0,0,0,15">
+
+            <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Center">
+
+                <TextBox Width="200"
+                     Margin="0,0,10,0"
+                     VerticalContentAlignment="Center"
+                     Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                     />
+
+                <TextBox Width="120"
+                     Margin="0,0,10,0"
+                     VerticalContentAlignment="Center"
+                     Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"
+                     />
+
+                <Button Content="Добавить"
+                    Width="100"
+                    Command="{Binding AddOperationCommand}" />
+
+            </StackPanel>
         </Border>
 
-        <TextBlock Text="Operation ID :"
-                   Foreground="#D8D8D8"
-                   FontSize="12"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontFamily="Candara"
-                   Margin="80, 154,0,0"/>
 
-        <TextBlock Text="{Binding OperationId}"
-                   Foreground="#D8D8D8"
-                   FontSize="12"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontFamily="Candara"
-                   Margin="175, 154,0,0"/>
+        <!-- 🔹 Список операций -->
+        <ItemsControl Grid.Row="1"
+                  ItemsSource="{Binding Operations}">
 
-        <TextBlock Text="Operation Name :"
-                   Foreground="#D8D8D8"
-                   FontSize="12"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontFamily="Candara"
-                   Margin="80, 184,0,0"/>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
 
-        <TextBlock Text="{Binding OperationName}"
-                   Foreground="#D8D8D8"
-                   FontSize="12"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   FontFamily="Candara"
-                   Margin="175, 184,0,0"/>
+                    <Border Background="#2B2B2B"
+                        CornerRadius="6"
+                        Padding="8"
+                        Margin="0,0,0,8">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Название -->
+                            <TextBlock Text="{Binding Title}"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"/>
+
+                            <!-- Сумма -->
+                            <TextBlock Grid.Column="1"
+                                   Text="{Binding Amount}"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"/>
+
+                            <!-- Дата -->
+                            <TextBlock Grid.Column="2"
+                                   Text="{Binding Date}"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"/>
+
+                            <!-- Кнопка удаления -->
+                            <Button Grid.Column="3"
+                                Content="❌"
+                                Width="30"
+                                Command="{Binding DataContext.DeleteOperationCommand,
+                                          RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}" />
+
+                        </Grid>
+                    </Border>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
 
     </Grid>
-    
+
 </UserControl>

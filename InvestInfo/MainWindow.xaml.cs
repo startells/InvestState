@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InvestInfo.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,9 +18,10 @@ namespace InvestInfo
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(NavigationVM navigationVM)
         {
             InitializeComponent();
+            DataContext = navigationVM;
         }
     }
 }
