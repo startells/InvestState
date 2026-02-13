@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Styles/Text.xaml"/>
                 <ResourceDictionary Source="Styles/Button.xaml"/>
                 <ResourceDictionary Source="Utilities/DataTemplate.xaml"/>
+                <ResourceDictionary Source="/Styles/OperationsStyle.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
             

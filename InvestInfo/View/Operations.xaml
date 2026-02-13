@@ -23,41 +23,32 @@
             CornerRadius="8"
             Margin="0,0,0,15">
 
-            <StackPanel Orientation="Horizontal"
-                    VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
 
-                <TextBox Width="200"
-                     Margin="0,0,10,0"
-                     VerticalContentAlignment="Center"
-                     Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                     />
+                <TextBox Style="{StaticResource OperationTextBoxStyle}"
+             Width="200"
+             Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBox Width="120"
-                     Margin="0,0,10,0"
-                     VerticalContentAlignment="Center"
-                     Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"
-                     />
+                <TextBox Style="{StaticResource OperationTextBoxStyle}"
+             Width="120"
+             Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Button Content="Добавить"
-                    Width="100"
-                    Command="{Binding AddOperationCommand}" />
+            Style="{StaticResource AddButtonStyle}"
+            Command="{Binding AddOperationCommand}" />
 
             </StackPanel>
+            
         </Border>
 
 
         <!-- 🔹 Список операций -->
         <ItemsControl Grid.Row="1"
-                  ItemsSource="{Binding Operations}">
-
+                      ItemsSource="{Binding Operations}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
 
-                    <Border Background="#2B2B2B"
-                        CornerRadius="6"
-                        Padding="8"
-                        Margin="0,0,0,8">
-
+                    <Border Style="{StaticResource OperationCardStyle}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -66,37 +57,32 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- Название -->
                             <TextBlock Text="{Binding Title}"
-                                   VerticalAlignment="Center"
-                                   Foreground="White"/>
+                               Foreground="White"
+                               VerticalAlignment="Center"/>
 
-                            <!-- Сумма -->
                             <TextBlock Grid.Column="1"
-                                   Text="{Binding Amount}"
-                                   VerticalAlignment="Center"
-                                   Foreground="White"/>
+                               Text="{Binding Amount, StringFormat={}{0:N2}}"
+                               Foreground="White"
+                               VerticalAlignment="Center"/>
 
-                            <!-- Дата -->
                             <TextBlock Grid.Column="2"
-                                   Text="{Binding Date}"
-                                   VerticalAlignment="Center"
-                                   Foreground="White"/>
+                               Text="{Binding Date, StringFormat={}{0:dd.MM.yyyy}}"
+                               Foreground="White"
+                               VerticalAlignment="Center"/>
 
-                            <!-- Кнопка удаления -->
                             <Button Grid.Column="3"
-                                Content="❌"
-                                Width="30"
-                                Command="{Binding DataContext.DeleteOperationCommand,
-                                          RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                CommandParameter="{Binding}" />
+                            Content="✖"
+                            Style="{StaticResource DeleteButtonStyle}"
+                            Command="{Binding DataContext.DeleteOperationCommand,
+                                      RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            CommandParameter="{Binding}" />
 
                         </Grid>
                     </Border>
 
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-
         </ItemsControl>
 
     </Grid>

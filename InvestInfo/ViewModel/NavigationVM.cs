@@ -32,7 +32,7 @@ namespace InvestInfo.ViewModel
             CloseApp = new Utilities.RelayCommand(obj => System.Windows.Application.Current.Shutdown());
 
             // Set default view
-            CurrentView = new HomeVM();
+            CurrentView = _serviceProvider.GetRequiredService<HomeVM>();
         }
     }
 }

@@ -1,31 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using InvestInfo.Data;
 using InvestInfo.Model;
+using InvestInfo.Utilities;
 
 namespace InvestInfo.ViewModel
 {
-    public class HomeVM : Utilities.ViewModelBase
+    public class HomeVM : ViewModelBase
     {
-        private readonly PortfolioModel _portfolioModel;
-        public decimal Cost
+        private readonly IOperationRepository _operationRepository;
+
+        private decimal _portfolioSum;
+        public decimal PortfolioSum
         {
-            get { return _portfolioModel.Cost; }
-            set { _portfolioModel.Cost = value; OnPropertyChanged(); }
+            get => _portfolioSum;
+            set { _portfolioSum = value; OnPropertyChanged(); }
         }
 
-        public DateOnly CreateDate
+        public HomeVM(IOperationRepository operationRepository)
         {
-            get { return _portfolioModel.CreateDate; }
-            set { _portfolioModel.CreateDate = value; OnPropertyChanged(); }
+            _operationRepository = operationRepository;
+            _operationRepository.OperationsChanged += async (s, e) => await LoadPortfolioSumAsync();
+
+            _ = LoadPortfolioSumAsync();
         }
 
-        public HomeVM()
+        private async Task LoadPortfolioSumAsync()
         {
-            _portfolioModel = new PortfolioModel();
-
-            Cost = 1000m; // Example initial value
-            CreateDate = DateOnly.FromDateTime(DateTime.Now); // Example initial value
+            var operations = await _operationRepository.GetAllAsync();
+            PortfolioSum = operations.Sum(op => op.Amount);
         }
     }
 }

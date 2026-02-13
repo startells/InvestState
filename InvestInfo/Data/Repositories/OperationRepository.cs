@@ -11,6 +11,8 @@ namespace InvestInfo.Data.Repositories
     {
         private readonly AppDbContext _context;
 
+        public event EventHandler? OperationsChanged;
+
         public OperationRepository(AppDbContext context)
         {
             _context = context;
@@ -26,13 +28,17 @@ namespace InvestInfo.Data.Repositories
         public async Task AddAsync(OperationModel operation)
         {
             await _context.Operations.AddAsync(operation);
+            OperationsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public async Task DeleteAsync(int id)
         {
             var entity = await _context.Operations.FindAsync(id);
             if (entity != null)
+            {
                 _context.Operations.Remove(entity);
+                OperationsChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public async Task SaveChangesAsync()
